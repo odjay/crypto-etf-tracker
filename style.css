@@ -9,7 +9,7 @@ body, html {
 
 header {
     background-color: #1a1a1a;
-    padding: 10px 0;
+    padding: 20px 0;
     text-align: center;
 }
 
@@ -27,12 +27,12 @@ header {
 
 .watchlist li {
     background-color: #333;
-    margin: 5px 0;
-    padding: 10px;
+    margin: 10px 0;
+    padding: 15px;
     border-radius: 5px;
 }
 
-/* Add item */
+/* Add item section */
 .add-item {
     margin-top: 20px;
 }
@@ -40,7 +40,7 @@ header {
 input[type="text"] {
     padding: 10px;
     margin-right: 10px;
-    width: 80%;
+    width: 75%;
     border: none;
     border-radius: 5px;
 }
@@ -66,4 +66,19 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    input[type="text"] {
+        width: 70%;
+    }
+
+    button {
+        width: 20%;
+    }
 }
