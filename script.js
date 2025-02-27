@@ -1,84 +1,56 @@
-/* General styles */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #121212;
-    color: white;
+// Binance API URL to fetch live data
+const binanceApiUrl = 'https://api4.binance.com/api/v3/ticker/24hr?symbol=';
+
+// Sample watchlist with symbols for crypto and ETF
+let watchlist = [
+    { symbol: 'BTCUSDT', name: 'Bitcoin' },
+    { symbol: 'ETHUSDT', name: 'Ethereum' },
+    { symbol: 'SPYUSDT', name: 'S&P 500 ETF' }, // Adjust symbol if needed
+];
+
+// Function to fetch and display the real-time data
+function fetchData() {
+    watchlist.forEach(item => {
+        const url = binanceApiUrl + item.symbol;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                item.price = data.lastPrice; // Update price
+                displayWatchlist();
+            })
+            .catch(error => console.error('Error fetching data from Binance:', error));
+    });
 }
 
-header {
-    background-color: #1a1a1a;
-    padding: 20px 0;
-    text-align: center;
+// Function to display the watchlist with live data
+function displayWatchlist() {
+    const listElement = document.getElementById('crypto-etf-list');
+    listElement.innerHTML = ''; // Clear the list
+
+    watchlist.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${item.name} (${item.symbol}) - $${item.price || 'Loading...'}`;
+        listElement.appendChild(listItem);
+    });
 }
 
-.container {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-}
+// Add custom symbol to the watchlist (assuming it's a valid Binance symbol)
+function addCustomItem() {
+    const symbol = document.getElementById('custom-symbol').value.trim().toUpperCase();
 
-/* Watchlist */
-.watchlist ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.watchlist li {
-    background-color: #333;
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 5px;
-}
-
-/* Add item section */
-.add-item {
-    margin-top: 20px;
-}
-
-input[type="text"] {
-    padding: 10px;
-    margin-right: 10px;
-    width: 75%;
-    border: none;
-    border-radius: 5px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #1a1a1a;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-    .container {
-        padding: 10px;
+    if (symbol) {
+        watchlist.push({ symbol: symbol + 'USDT', name: `${symbol} Custom` }); // Assume USDT pair
+        fetchData(); // Fetch data for the new custom symbol
+        displayWatchlist(); // Update the list
     }
 
-    input[type="text"] {
-        width: 70%;
-    }
-
-    button {
-        width: 20%;
-    }
+    // Clear input after adding
+    document.getElementById('custom-symbol').value = '';
 }
+
+// Initial fetch on page load
+fetchData();
+
+// Automatically refresh data every 60 seconds
+setInterval(fetchData, 60000); // Fetch data every minute
