@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto & ETF Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Crypto & ETF Tracker</h1>
+    </header>
+
+    <div class="container">
+        <div class="watchlist">
+            <h2>Watchlist</h2>
+            <ul id="crypto-etf-list">
+                <!-- Items will be inserted dynamically -->
+            </ul>
+        </div>
+
+        <div class="add-item">
+            <h2>Add Custom Crypto/ETF</h2>
+            <input type="text" id="custom-symbol" placeholder="Enter symbol (e.g., BTC, SPY)">
+            <button onclick="addCustomItem()">Add</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Crypto & ETF Tracker</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
